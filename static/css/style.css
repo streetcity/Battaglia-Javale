@@ -186,7 +186,6 @@ button:hover{
   border-radius: 4px;
 }
 
-/*modifiche sperimentali*/
 #difficulty{
   background-color: #fff;
   color: #000000;
@@ -212,4 +211,32 @@ button:hover{
   font-weight: bold;
   color: #fff;
   text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+#powerups{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+#powerups button{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 1rem;
+  background-color: #fff;
+  border: 2px solid #000;
+  border-radius: 6px;
+  transition: transform 0.1s, background 0.2s;
+}
+
+#powerups button img{
+  height: 24px;
+  vertical-align: middle;
+  margin-right: 4px;
 }
