@@ -6,6 +6,10 @@ let piazzateShips = 0;
 let draggedShip = null;
 let playerGrid, compGrid, playerSegments, compSegments;
 
+let seconds = 0;
+let shots = 0;
+let timerInterval = null;
+
 //per la difficoltà
 let difficulty = 'easy';
 const difficultySelect = document.getElementById('difficulty');
@@ -30,6 +34,16 @@ const sounds = {
   win: new Audio('static/Suoni/win.mp3'),
   lose: new Audio('static/Suoni/lose.mp3'),
 };
+
+function startTimer() {
+  timerInterval = setInterval(() => {
+    seconds++;
+    // format mm:ss
+    const m = String(Math.floor(seconds/60)).padStart(2,'0');
+    const s = String(seconds%60).padStart(2,'0');
+    document.getElementById('timer').textContent = `${m}:${s}`;
+  }, 1000);
+}
 
 //crea spazio per posizionare le navi
 function makeBoard(container){
@@ -99,6 +113,7 @@ setupBoard.addEventListener('drop', e => {
 
 //inizio del game
 startButton.addEventListener('click', () => {
+  startTimer();
   if(piazzateShips < SHIPS.length){
     alert('Posiziona tutte le navi prima di iniziare!');
     return;
@@ -186,6 +201,8 @@ function renderBoard(container, grid, isEnemy){
 
 //gestione del colpo del giocatore
 function playerShoot(idx){
+  shots++;
+  document.getElementById('shots').textContent = `Colpi: ${shots}`;
   const r = Math.floor(idx / SIZE);
   const c = idx % SIZE;
   const cell = compGrid[r][c];
@@ -293,6 +310,7 @@ function smartShot(){
 
 //disabilita ulteriori click (quando finisce il gioco ovviamente)
 function endGame(msg){
+  clearInterval(timerInterval);
   messages.textContent = msg;
   if(msg.includes('Hai vinto!🎉')){
     sounds.win.play();

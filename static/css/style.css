@@ -187,19 +187,29 @@ button:hover{
 }
 
 /*modifiche sperimentali*/
-#difficulty {
-  background-color: #fff;           /* stesso sfondo dei bottoni */
-  color: #000000;                   /* testo a contrasto col bg principale */
-  border: 2px solid #000;           /* stesso bordo dei bottoni */
-  border-radius: 6px;               /* raggio uguale ai tuoi button */
-  padding: 4px 8px 4px 8px;       /* spazio interno, lascia area per la freccia */
+#difficulty{
+  background-color: #fff;
+  color: #000000;
+  border: 2px solid #000;
+  border-radius: 6px;
+  padding: 4px 8px 4px 8px;
   font-size: 1rem;
   font-family: inherit;
   transition: transform 0.1s, background 0.2s;
 }
 
-/* Hover e active come i tuoi button */
-#difficulty:hover {
-  background-color: #ccc;
+#difficulty:hover{
+  background-color: rgb(200, 200, 200);
   transform: translateY(-2px);
+}
+
+#hud{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
 }
