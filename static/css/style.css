@@ -1,0 +1,205 @@
+body{
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #1d96e1;
+  font-family: 'Montserrat', sans-serif;
+  cursor: url('cursore/cursorePazzescoMegaGalattico.cur'), default;
+}
+
+#bg-video{
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1;
+}
+
+h1{
+  text-align: center;
+  margin: 20px 0;
+  font-size: 2.5rem;
+  color: #fff;
+}
+h2{
+  text-align: center;
+  margin: 20px 0;
+  font-size: 1.5rem;
+  color: #fff;
+}
+h3{
+  text-align: center;
+  margin: 20px 0;
+  font-size: 1rem;
+  color: #fff;
+}
+
+h1, h2, h3 {
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+.container{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+/*colonne laterali*/
+.decor-col{
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  position: fixed;
+  top: 0;
+  width: 200px;
+  height: 100vh;
+}
+
+.decor-col img{
+  width: 100%;
+  height: 50vh;
+  object-fit: cover;
+  display: block;
+}
+.decor-col:first-child { left: 0; }
+.decor-col:last-child  { right: 0; }
+
+.game-area{
+  margin: 0 400px; /*spazio per immagini*/
+  flex: 1;
+  text-align: center;
+}
+
+.setup .fleet{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.setup .ship{
+  background: #88a;
+  border: 2px solid #556;
+  cursor: grab;
+}
+.setup .ship[data-length="5"] { width: 150px; height: 30px; }
+.setup .ship[data-length="4"] { width: 120px; height: 30px; }
+.setup .ship[data-length="3"] { width: 90px;  height: 30px; }
+.setup .ship[data-length="2"] { width: 60px;  height: 30px; }
+
+.board{
+  display: grid;
+  grid-template-columns: repeat(10, 30px);
+  grid-template-rows: repeat(10, 30px);
+  gap: 2px;
+  justify-content: center;
+  margin: 10px auto;
+}
+.board .cell{
+  width: 30px;
+  height: 30px;
+  background: #cce;
+  border: 1px solid #88a;
+  box-sizing: border-box;
+}
+.play .boards.vertical {
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+}
+.play .boards.vertical > div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cell.over{
+  outline: 2px dashed #556;
+}
+.cell.filled{
+  background-color: #556;
+}
+
+.cell.acqua{
+  background-color: #336699 !important;
+}
+.cell.colpita{
+  background-color: #cc3333 !important;
+}
+
+.play.hidden { display: none; }
+
+.play .boards{
+  display: flex;
+  justify-content: space-around;
+  gap: 50px;
+}
+
+.messages{
+  margin-top: 10px;
+  font-weight: bold;
+  color: #fff;
+}
+
+button{
+  padding: 6px 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 6px;
+  transition: transform 0.1s, background 0.2s;
+}
+
+button:hover{
+  background-color: rgb(200, 200, 200);
+  transform: translateY(-2px);
+}
+
+.cell:hover{
+  transform: translateY(2px) scale(1.05);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  border: 2px solid rgb(0, 0, 0);
+}
+
+#overlay{
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: -1;
+}
+#bg-video{ 
+  z-index: -2;
+}
+
+.game-area{
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  padding: 20px;
+}
+
+.board .cell{
+  border-radius: 4px;
+}
+
+/*modifiche sperimentali*/
+#difficulty {
+  background-color: #fff;           /* stesso sfondo dei bottoni */
+  color: #000000;                   /* testo a contrasto col bg principale */
+  border: 2px solid #000;           /* stesso bordo dei bottoni */
+  border-radius: 6px;               /* raggio uguale ai tuoi button */
+  padding: 4px 8px 4px 8px;       /* spazio interno, lascia area per la freccia */
+  font-size: 1rem;
+  font-family: inherit;
+  transition: transform 0.1s, background 0.2s;
+}
+
+/* Hover e active come i tuoi button */
+#difficulty:hover {
+  background-color: #ccc;
+  transform: translateY(-2px);
+}

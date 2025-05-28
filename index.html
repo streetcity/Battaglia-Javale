@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Battaglia Navale</title>
+  <link rel="stylesheet" href="static/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div id="overlay"></div>
+  <video autoplay muted loop id="bg-video">
+    <source src="static/Video Sfondo/videoSfondo.mp4" type="video/mp4">
+  </video>
+
+  <h1>BATTAGLIA JAVALE</h1>
+  <div class="container">
+    <div class="decor-col">
+      <img src="static/Immagini/left-ship.png" alt="Nave da Guerra">
+      <img src="static/immagini/left-ship2.png" alt="Nave da Guerra">
+    </div>
+
+    <div class="game-area">
+      <div id="setup" class="setup">
+        <h2>POSIZIONA LE TUE NAVI</h2>
+        <div id="fleet" class="fleet">
+          <div class="ship" data-length="5" draggable="true"></div>
+          <div class="ship" data-length="4" draggable="true"></div>
+          <div class="ship" data-length="3" draggable="true"></div>
+          <div class="ship" data-length="3" draggable="true"></div>
+          <div class="ship" data-length="2" draggable="true"></div>
+        </div>
+        <div id="player-board" class="board"></div>
+        <button id="start">INIZIA PARTITA</button>
+        <div id="container">
+          <select id="difficulty">
+            <option value="easy">FACILE😇</option>
+            <option value="hard">DIFFICILE🤬</option>
+          </select>
+        </div>
+      </div>
+
+      <!--seconda fase-->
+      <div id="play" class="play hidden">
+        <div class="boards vertical">
+          <div>
+            <h3>LA TUA FLOTTA</h3>
+            <div id="player-view" class="board"></div>
+          </div>
+          <div>
+            <h3>CAMPO AVVERSARIO</h3>
+            <div id="computer-view" class="board"></div>
+          </div>
+        </div>
+        <div id="messages" class="messages"></div>
+      </div>
+    </div>
+
+    <div class="decor-col">
+      <img src="static/immagini/right-ship.png" alt="Nave da Guerra">
+      <img src="static/immagini/right-ship2.png" alt="Nave da Guerra">
+    </div>
+  </div>
+
+  <script src="static/js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+</body>
+
+</html>
