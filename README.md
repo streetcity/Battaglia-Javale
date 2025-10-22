@@ -1,4 +1,4 @@
 # Battaglia-Javale
 
-Benvenuti nel nostro progetto scolastico **Battaglia Javale** (fa ridere vero?)  
-Speriamo che il nostro gioco vi piaccia e, se avete suggerimenti per migliorarlo, non esitate a farceli sapere!
+Benvenuti nel mio progetto scolastico **Battaglia Javale** (fa ridere vero?)  
+Spero che il gioco vi piaccia e, se avete suggerimenti per migliorarlo, non esitate a farmelo sapere!
