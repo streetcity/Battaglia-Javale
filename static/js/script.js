@@ -10,6 +10,11 @@ let seconds = 0;
 let shots = 0;
 let timerInterval = null;
 
+let missileActive = false;
+let radarActive = false;
+let missileUsed = false;
+let radarUsed = false;
+
 //per la difficoltà
 let difficulty = 'easy';
 const difficultySelect = document.getElementById('difficulty');
@@ -27,6 +32,8 @@ const playDiv = document.getElementById('play');
 const playerBoard = document.getElementById('player-view');
 const computerBoard = document.getElementById('computer-view');
 const messages = document.getElementById('messages');
+const missileBtn = document.getElementById('missile-btn');
+const radarBtn = document.getElementById('radar-btn');
 
 const sounds = {
   hit: new Audio('static/Suoni/hit.mp3'),
@@ -35,10 +42,28 @@ const sounds = {
   lose: new Audio('static/Suoni/lose.mp3'),
 };
 
-function startTimer() {
+missileBtn.addEventListener('click', () => {
+  if(missileUsed){
+    return;
+  }
+  missileActive = true;
+  radarActive = false;
+  messages.textContent = 'Missile attivo! Clicca sul campo avversario per colpire una zona 3x3.';
+});
+
+radarBtn.addEventListener('click', () => {
+  if(radarUsed){
+    return;
+  }
+  radarActive = true;
+  missileActive = false;
+  messages.textContent = 'Radar attivo! Clicca sul campo avversario per rivelare  una zona 5x5.';
+});
+
+function startTimer(){
   timerInterval = setInterval(() => {
     seconds++;
-    // format mm:ss
+    //formato mm:ss
     const m = String(Math.floor(seconds/60)).padStart(2,'0');
     const s = String(seconds%60).padStart(2,'0');
     document.getElementById('timer').textContent = `${m}:${s}`;
@@ -181,7 +206,7 @@ function placeCompShips(){
 
 
 //renderizza un campo da gioco (isEnemy=true abilita il click per sparare)
-function renderBoard(container, grid, isEnemy){
+function renderBoard(container, grid, isEnemy, radarZone = null){
   container.innerHTML = '';
   grid.flat().forEach((cell, idx) => {
     const div = document.createElement('div');
@@ -192,8 +217,26 @@ function renderBoard(container, grid, isEnemy){
     else if(!isEnemy && cell.ship){
       div.classList.add('filled');
     }
+    //evidenzia zona radar
+    if(radarZone && radarZone.includes(idx)){
+      if(cell.ship){
+        div.classList.add('filled');
+      }
+      div.style.opacity = '0.7';
+      div.style.border = '2px dashed yellow';
+    }
     if(isEnemy && !cell.hit){
-      div.addEventListener('click', () => playerShoot(idx));
+      div.addEventListener('click', () => {
+        if(missileActive){
+          useMissile(idx);
+        }
+        else if(radarActive){
+          useRadar(idx);
+        }
+        else{
+          playerShoot(idx);
+        }
+      });
     }
     container.appendChild(div);
   });
@@ -226,7 +269,7 @@ function playerShoot(idx){
     festeggiamenti();
     return endGame('Hai vinto!🎉');
   }
-  setTimeout(botTurn, 1000);
+  setTimeout(botTurn, 3000);
 }
 
 function botTurn(){
@@ -308,10 +351,81 @@ function smartShot(){
   }
 }
 
+function useMissile(idx){
+  if(missileUsed){
+    return;
+  }
+  missileUsed = true;
+  missileActive = false;
+  missileBtn.disabled = true;
+
+  const r = Math.floor(idx / SIZE);
+  const c = idx % SIZE;
+  let colpiti = 0;
+
+  for(let dr = -1; dr <= 1; dr++){
+    for(let dc = -1; dc <= 1; dc++){
+      const nr = r + dr;
+      const nc = c + dc;
+      if(nr >= 0 && nr < SIZE && nc >= 0 && nc < SIZE){
+        const cell = compGrid[nr][nc];
+        if(!cell.hit){
+          cell.hit = true;
+          if(cell.ship){
+            compSegments--;
+            colpiti++;
+          }
+        }
+      }
+    }
+  }
+  sounds.hit.currentTime = 0;
+  sounds.hit.play();
+  messages.textContent = 'Missile lanciato!';
+  renderBoard(computerBoard, compGrid, true);
+  if(compSegments === 0){
+    festeggiamenti();
+    return endGame('Hai vinto!🎉');
+  }
+  setTimeout(botTurn, 3000);
+}
+
+function useRadar(idx){
+  if(radarUsed){
+    return;
+  }
+  radarUsed = true;
+  radarActive = false;
+  radarBtn.disabled = true;
+
+  const r = Math.floor(idx / SIZE);
+  const c = idx % SIZE;
+  let radarZone = [];
+
+  for(let dr = -2; dr <= 2; dr++){
+    for(let dc = -2; dc <= 2; dc++){
+      const nr = r + dr;
+      const nc = c + dc;
+      if(nr >= 0 && nr < SIZE && nc >= 0 && nc < SIZE){
+        radarZone.push(nr * SIZE + nc);
+      }
+    }
+  }
+  messages.textContent = 'Zona radar rivelata!';
+  renderBoard(computerBoard, compGrid, true, radarZone);
+
+  setTimeout(() => {
+    renderBoard(computerBoard, compGrid, true);
+    messages.textContent = '';
+  }, 3000);
+}
+
 //disabilita ulteriori click (quando finisce il gioco ovviamente)
 function endGame(msg){
   clearInterval(timerInterval);
   messages.textContent = msg;
+  missileBtn.disabled = true;
+  radarBtn.disabled = true;
   if(msg.includes('Hai vinto!🎉')){
     sounds.win.play();
   }
